@@ -2,6 +2,7 @@ import LogoImage from '@documenso/assets/logo.png';
 import { authClient } from '@documenso/auth/client';
 import { useOptionalCurrentOrganisation } from '@documenso/lib/client-only/providers/organisation';
 import { useSession } from '@documenso/lib/client-only/providers/session';
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { canAccessOrganisationAnalytics, formatOrganisationAnalyticsPath } from '@documenso/lib/utils/organisations';
 import { canExecuteTeamAction, formatAnalyticsPath } from '@documenso/lib/utils/teams';
 import { trpc } from '@documenso/trpc/react';
@@ -90,7 +91,7 @@ export const AppNavMobile = ({ isMenuOpen, onMenuOpenChange }: AppNavMobileProps
     <Sheet open={isMenuOpen} onOpenChange={onMenuOpenChange}>
       <SheetContent className="flex w-full max-w-[350px] flex-col">
         <Link to="/" onClick={handleMenuItemClick}>
-          <img src={LogoImage} alt="Documenso Logo" className="dark:invert" width={170} height={25} />
+          <img src={LogoImage} alt={`${APP_NAME} logo`} className="dark:invert" width={170} height={25} />
         </Link>
 
         <div className="mt-8 flex w-full flex-col items-start gap-y-4">
@@ -124,7 +125,7 @@ export const AppNavMobile = ({ isMenuOpen, onMenuOpenChange }: AppNavMobileProps
           </div>
 
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Documenso, Inc.
+            © {new Date().getFullYear()} {APP_NAME}
             <br />
             <Trans>All rights reserved.</Trans>
           </p>

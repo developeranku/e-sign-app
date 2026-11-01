@@ -1,3 +1,4 @@
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { formatTeamUrl } from '@documenso/lib/utils/teams';
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
@@ -18,14 +19,14 @@ export type ConfirmTeamEmailProps = {
 
 export const ConfirmTeamEmailTemplate = ({
   assetBaseUrl = 'http://localhost:3002',
-  baseUrl = 'https://documenso.com',
+  baseUrl = 'https://example.com',
   teamName = 'Team Name',
   teamUrl = 'demo',
   token = '',
 }: ConfirmTeamEmailProps) => {
   const { _ } = useLingui();
 
-  const previewText = msg`Accept team email request for ${teamName} on Documenso`;
+  const previewText = msg`Accept team email request for ${teamName} on ${APP_NAME}`;
 
   return (
     <Html>
@@ -49,7 +50,7 @@ export const ConfirmTeamEmailTemplate = ({
               <Text className="text-center text-base">
                 <Trans>
                   <span className="font-bold">{teamName}</span> has requested to use your email address for their team
-                  on Documenso.
+                  on {APP_NAME}.
                 </Trans>
               </Text>
 
@@ -78,7 +79,7 @@ export const ConfirmTeamEmailTemplate = ({
 
                 <Text className="mt-2 text-sm">
                   <Trans>
-                    You can revoke access at any time in your team settings on Documenso{' '}
+                    You can revoke access at any time in your team settings on {APP_NAME}{' '}
                     <Link href={`${baseUrl}/settings/teams`}>here</Link>.
                   </Trans>
                 </Text>

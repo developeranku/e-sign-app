@@ -1,3 +1,4 @@
+import { isEmailVerificationDisabled } from '@documenso/lib/constants/auth';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import type { RequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
 import { prisma } from '@documenso/prisma';
@@ -126,6 +127,12 @@ export const validateSessionToken = async (token: string): Promise<SessionValida
         expiresAt: session.expiresAt,
       },
     });
+  }
+
+  // TEMPORARY: report unconfirmed users as confirmed so app checks (upload, banner) don't block them.
+  // Only the in-memory session copy changes; the database still holds the real value.
+  if (!user.emailVerified && isEmailVerificationDisabled()) {
+    user.emailVerified = session.createdAt;
   }
 
   return { session, user, isAuthenticated: true };

@@ -1,5 +1,6 @@
 import { mailer } from '@documenso/email/mailer';
 import { AdminUserCreatedTemplate } from '@documenso/email/templates/admin-user-created';
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { prisma } from '@documenso/prisma';
 import { msg } from '@lingui/core/macro';
 import crypto from 'crypto';
@@ -60,7 +61,7 @@ export const run = async ({ payload, io }: { payload: TSendAdminUserCreatedEmail
       name: user.name || '',
     },
     from: DOCUMENSO_INTERNAL_EMAIL,
-    subject: i18n._(msg`Welcome to Documenso`),
+    subject: i18n._(msg`Welcome to ${APP_NAME}`),
     html,
     text,
   });

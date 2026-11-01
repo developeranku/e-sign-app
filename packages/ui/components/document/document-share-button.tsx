@@ -1,5 +1,5 @@
 import { useCopyShareLink } from '@documenso/lib/client-only/hooks/use-copy-share-link';
-import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { APP_NAME, NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
 import { DO_NOT_INVALIDATE_QUERY_ON_MUTATION } from '@documenso/lib/constants/trpc';
 import { generateTwitterIntent } from '@documenso/lib/universal/generate-twitter-intent';
 import { trpc } from '@documenso/trpc/react';
@@ -105,7 +105,7 @@ export const DocumentShareButton = ({ token, documentId, className, trigger }: D
 
     window.open(
       generateTwitterIntent(
-        `I just ${token ? 'signed' : 'sent'} a document in style with @documenso. Check it out!`,
+        `I just ${token ? 'signed' : 'sent'} a document with ${APP_NAME}. Check it out!`,
         `${NEXT_PUBLIC_WEBAPP_URL()}/share/${slug}`,
       ),
       '_blank',

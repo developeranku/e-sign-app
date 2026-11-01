@@ -1,5 +1,5 @@
 import { useCurrentOrganisation } from '@documenso/lib/client-only/providers/organisation';
-import { DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL } from '@documenso/lib/constants/app';
+import { APP_NAME, DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL } from '@documenso/lib/constants/app';
 import { formatAvatarUrl } from '@documenso/lib/utils/avatars';
 import { cn } from '@documenso/ui/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@documenso/ui/primitives/avatar';
@@ -92,7 +92,7 @@ export const EmailDomainsUpsell = () => {
                 )}
 
                 <span className="truncate">
-                  {isBranded ? <Trans>Sending from your domain</Trans> : <Trans>Sending from app.documenso.com</Trans>}
+                  {isBranded ? <Trans>Sending from your domain</Trans> : <Trans>Sending from {APP_NAME}</Trans>}
                 </span>
               </motion.div>
             </AnimatePresence>
@@ -147,7 +147,7 @@ export const EmailDomainsUpsell = () => {
                       transition={{ duration: 0.28, ease: EASE }}
                       className="flex min-w-0 items-center gap-1.5"
                     >
-                      <span className="min-w-0 truncate">{isBranded ? brandedSender.name : 'Documenso'}</span>
+                      <span className="min-w-0 truncate">{isBranded ? brandedSender.name : APP_NAME}</span>
 
                       {/* Inside the keyed row so it exits with the name and pops back in on every cycle step. */}
                       {isBranded && (
@@ -174,7 +174,7 @@ export const EmailDomainsUpsell = () => {
                       transition={{ duration: 0.28, ease: EASE }}
                       className="truncate"
                     >
-                      {isBranded ? brandedSender.email : 'noreply@app.documenso.com'}
+                      {isBranded ? brandedSender.email : 'noreply@example.com'}
                     </motion.p>
                   </AnimatePresence>
                 </div>

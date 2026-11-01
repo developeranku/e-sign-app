@@ -1,7 +1,16 @@
+import { isEmailVerificationDisabled } from '@documenso/lib/constants/auth';
 import { Trans } from '@lingui/react/macro';
 import { Mails } from 'lucide-react';
+import { redirect } from 'react-router';
 
 import { SendConfirmationEmailForm } from '~/components/forms/send-confirmation-email';
+
+// TEMPORARY: with email confirmation turned off, send people (e.g. right after signup) to sign in instead.
+export function loader() {
+  if (isEmailVerificationDisabled()) {
+    throw redirect('/signin');
+  }
+}
 
 export default function UnverifiedAccount() {
   return (

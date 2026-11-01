@@ -1,5 +1,6 @@
 import { mailer } from '@documenso/email/mailer';
 import { ResetPasswordTemplate } from '@documenso/email/templates/reset-password';
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { prisma } from '@documenso/prisma';
 import { msg } from '@lingui/core/macro';
 import { createElement } from 'react';
@@ -50,8 +51,8 @@ export const sendResetPassword = async ({ userId, source }: SendResetPasswordOpt
       name: user.name || '',
     },
     from: {
-      name: env('NEXT_PRIVATE_SMTP_FROM_NAME') || 'Documenso',
-      address: env('NEXT_PRIVATE_SMTP_FROM_ADDRESS') || 'noreply@documenso.com',
+      name: env('NEXT_PRIVATE_SMTP_FROM_NAME') || APP_NAME,
+      address: env('NEXT_PRIVATE_SMTP_FROM_ADDRESS') || 'noreply@example.com',
     },
     subject,
     html,

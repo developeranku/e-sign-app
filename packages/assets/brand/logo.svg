@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 308 64">
+  <defs>
+    <mask id="letter-e">
+      <rect width="64" height="64" fill="#fff" />
+      <path d="M18 32H46M46 32A14 14 0 1 0 42.7 41" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round" />
+    </mask>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#18181b" mask="url(#letter-e)" />
+  <text x="78" y="46" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="40" font-weight="600" fill="#18181b" textLength="230" lengthAdjust="spacingAndGlyphs">e-docusign</text>
+</svg>

@@ -1,5 +1,6 @@
 import { mailer } from '@documenso/email/mailer';
 import { AccountDisabledEmailTemplate } from '@documenso/email/templates/account-disabled';
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { prisma } from '@documenso/prisma';
 import { msg } from '@lingui/core/macro';
 import { createElement } from 'react';
@@ -51,7 +52,7 @@ export const run = async ({ payload, io }: { payload: TSendAccountDisabledEmailJ
         name: user.name || '',
       },
       from: DOCUMENSO_INTERNAL_EMAIL,
-      subject: i18n._(msg`Your Documenso account has been disabled`),
+      subject: i18n._(msg`Your ${APP_NAME} account has been disabled`),
       html,
       text,
     });

@@ -2,6 +2,12 @@ import { env } from '@documenso/lib/utils/env';
 import { AppError, AppErrorCode } from '../errors/app-error';
 import { SignatureLevel, type TSignatureLevel } from '../types/signature-level';
 
+/**
+ * The product name users see in the app, emails and PDFs. Rename the product by editing this line.
+ * Logo files live in packages/assets/brand.
+ */
+export const APP_NAME = 'e-docusign';
+
 export const APP_DOCUMENT_UPLOAD_SIZE_LIMIT = Number(env('NEXT_PUBLIC_DOCUMENT_SIZE_UPLOAD_LIMIT')) || 50;
 
 export const NEXT_PUBLIC_WEBAPP_URL = () => env('NEXT_PUBLIC_WEBAPP_URL') ?? 'http://localhost:3000';
@@ -72,7 +78,7 @@ export const IS_DOCUMENSO_CLOUD = () => env('NEXT_PUBLIC_IS_DOCUMENSO_CLOUD') ==
 export const API_V2_BETA_URL = '/api/v2-beta';
 export const API_V2_URL = '/api/v2';
 
-export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'support@documenso.com';
+export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') || 'support@example.com';
 
 export const USE_INTERNAL_URL_BROWSERLESS = () => env('NEXT_PUBLIC_USE_INTERNAL_URL_BROWSERLESS') === 'true';
 
@@ -100,7 +106,7 @@ export const IS_AI_FEATURES_CONFIGURED = (): boolean => {
 export const NEXT_PRIVATE_USE_PLAYWRIGHT_PDF = () => env('NEXT_PRIVATE_USE_PLAYWRIGHT_PDF') === 'true';
 
 export const NEXT_PRIVATE_SIGNING_TIMESTAMP_AUTHORITY = () => env('NEXT_PRIVATE_SIGNING_TIMESTAMP_AUTHORITY');
-export const NEXT_PRIVATE_SIGNING_REASON = () => env('NEXT_PRIVATE_SIGNING_REASON') || 'Signed by Documenso';
+export const NEXT_PRIVATE_SIGNING_REASON = () => env('NEXT_PRIVATE_SIGNING_REASON') || `Signed by ${APP_NAME}`;
 
 export const NEXT_PRIVATE_SIGNING_TRANSPORT = () => env('NEXT_PRIVATE_SIGNING_TRANSPORT') || 'local';
 
@@ -155,4 +161,4 @@ export const CSC_INSTANCE_SIGNATURE_LEVEL = (): TSignatureLevel => {
   return value;
 };
 
-export const DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL = 'https://documen.so/enterprise-cta';
+export const DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL = `mailto:${SUPPORT_EMAIL}`;

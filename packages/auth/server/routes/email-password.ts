@@ -1,6 +1,7 @@
 import {
   isDisposableEmail,
   isEmailDomainAllowedForSignup,
+  isEmailVerificationDisabled,
   isSigninEnabledForProvider,
   isSignupEnabledForProvider,
 } from '@documenso/lib/constants/auth';
@@ -157,7 +158,8 @@ export const emailPasswordRoute = new Hono<HonoAuthContext>()
       }
     }
 
-    if (!user.emailVerified) {
+    // TEMPORARY bypass via NEXT_PRIVATE_DISABLE_EMAIL_VERIFICATION, see isEmailVerificationDisabled.
+    if (!user.emailVerified && !isEmailVerificationDisabled()) {
       const mostRecentToken = await getMostRecentEmailVerificationToken({
         userId: user.id,
       });

@@ -2,6 +2,7 @@ import {
   IS_GOOGLE_SSO_ENABLED,
   IS_MICROSOFT_SSO_ENABLED,
   IS_OIDC_SSO_ENABLED,
+  isEmailVerificationDisabled,
   isSignupEnabledForProvider,
 } from '@documenso/lib/constants/auth';
 import { isValidReturnTo, normalizeReturnTo } from '@documenso/lib/utils/is-valid-return-to';
@@ -39,6 +40,7 @@ export function loader({ request }: Route.LoaderArgs) {
     isGoogleSignupEnabled,
     isMicrosoftSignupEnabled,
     isOidcSignupEnabled,
+    isEmailVerificationDisabled: isEmailVerificationDisabled(),
     returnTo,
   };
 }
@@ -49,6 +51,7 @@ export default function SignUp({ loaderData }: Route.ComponentProps) {
     isGoogleSignupEnabled,
     isMicrosoftSignupEnabled,
     isOidcSignupEnabled,
+    isEmailVerificationDisabled,
     returnTo,
   } = loaderData;
 
@@ -59,6 +62,7 @@ export default function SignUp({ loaderData }: Route.ComponentProps) {
       isGoogleSignupEnabled={isGoogleSignupEnabled}
       isMicrosoftSignupEnabled={isMicrosoftSignupEnabled}
       isOidcSignupEnabled={isOidcSignupEnabled}
+      isEmailVerificationDisabled={isEmailVerificationDisabled}
       returnTo={returnTo}
     />
   );

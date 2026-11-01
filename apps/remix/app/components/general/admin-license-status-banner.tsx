@@ -1,9 +1,8 @@
+import { APP_NAME } from '@documenso/lib/constants/app';
 import type { TCachedLicense } from '@documenso/lib/types/license';
 import { cn } from '@documenso/ui/lib/utils';
-import { Button } from '@documenso/ui/primitives/button';
 import { Trans } from '@lingui/react/macro';
-import { AlertTriangleIcon, KeyRoundIcon } from 'lucide-react';
-import { Link } from 'react-router';
+import { AlertTriangleIcon } from 'lucide-react';
 import { match } from 'ts-pattern';
 
 export type AdminLicenseStatusBannerProps = {
@@ -37,31 +36,14 @@ export const AdminLicenseStatusBanner = ({ license }: AdminLicenseStatusBannerPr
             .with('UNAUTHORIZED', () =>
               license ? (
                 <Trans>
-                  Invalid License Type - Your Documenso instance is using features that are not part of your license.
+                  Invalid License Type - Your {APP_NAME} instance is using features that are not part of your license.
                 </Trans>
               ) : (
-                <Trans>Missing License - Your Documenso instance is using features that require a license.</Trans>
+                <Trans>Missing License - Your {APP_NAME} instance is using features that require a license.</Trans>
               ),
             )
             .otherwise(() => null)}
         </div>
-
-        <Button
-          variant="outline"
-          size="sm"
-          className={cn({
-            'border-yellow-900/30 text-yellow-900 hover:bg-yellow-100 dark:hover:bg-yellow-500':
-              licenseStatus === 'PAST_DUE',
-            'border-destructive-foreground/30 text-destructive-foreground hover:bg-destructive/80':
-              licenseStatus === 'EXPIRED' || licenseStatus === 'UNAUTHORIZED',
-          })}
-          asChild
-        >
-          <Link to="https://docs.documenso.com/users/licenses/enterprise-edition" target="_blank">
-            <KeyRoundIcon className="mr-1.5 h-4 w-4" />
-            <Trans>See Documentation</Trans>
-          </Link>
-        </Button>
       </div>
     </div>
   );

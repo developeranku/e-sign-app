@@ -1,12 +1,12 @@
 import MailChecker from 'mailchecker';
 
 import { env } from '../utils/env';
-import { NEXT_PUBLIC_WEBAPP_URL } from './app';
+import { APP_NAME, NEXT_PUBLIC_WEBAPP_URL } from './app';
 
 export const SALT_ROUNDS = 12;
 
 export const IDENTITY_PROVIDER_NAME: Record<string, string> = {
-  DOCUMENSO: 'Documenso',
+  DOCUMENSO: APP_NAME,
   GOOGLE: 'Google',
   MICROSOFT: 'Microsoft',
   OIDC: 'OIDC',
@@ -182,6 +182,14 @@ export const isSignupEnabledForProvider = (provider: 'email' | 'google' | 'micro
   } as const;
 
   return env(flagMap[provider]) !== 'true';
+};
+
+/**
+ * TEMPORARY: lets users sign in and use the app without confirming their email.
+ * Remove once email confirmation is wanted again.
+ */
+export const isEmailVerificationDisabled = (): boolean => {
+  return env('NEXT_PRIVATE_DISABLE_EMAIL_VERIFICATION') === 'true';
 };
 
 export const isSigninDisabledGlobally = (): boolean => {

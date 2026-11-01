@@ -1,3 +1,4 @@
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { AppError } from '@documenso/lib/errors/app-error';
 import type { Session } from '@prisma/client';
 import type { Context } from 'hono';
@@ -19,7 +20,7 @@ export const assertNotEmbedSession = (session: Pick<Session, 'isEmbed'> | null |
   }
 
   throw new AppError(AuthenticationErrorCode.EmbedSessionRestricted, {
-    message: 'This action is not available from an embedded session. Sign in to Documenso directly to continue.',
+    message: `This action is not available from an embedded session. Sign in to ${APP_NAME} directly to continue.`,
     statusCode: 403,
   });
 };

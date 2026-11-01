@@ -1,3 +1,4 @@
+import { APP_NAME } from '@documenso/lib/constants/app';
 import { trpc } from '@documenso/trpc/react';
 import { ZCreateWebhookRequestSchema } from '@documenso/trpc/server/webhook-router/schema';
 import { Button } from '@documenso/ui/primitives/button';
@@ -127,7 +128,7 @@ export const WebhookCreateDialog = ({ trigger, ...props }: WebhookCreateDialogPr
                       </FormControl>
 
                       <FormDescription>
-                        <Trans>The URL for Documenso to send webhook events to.</Trans>
+                        <Trans>The URL for {APP_NAME} to send webhook events to.</Trans>
                       </FormDescription>
 
                       <FormMessage />
@@ -196,8 +197,8 @@ export const WebhookCreateDialog = ({ trigger, ...props }: WebhookCreateDialogPr
 
                     <FormDescription>
                       <Trans>
-                        A secret that will be sent to your URL so you can verify that the request has been sent by
-                        Documenso.
+                        A secret that will be sent to your URL so you can verify that the request has been sent by{' '}
+                        {APP_NAME}.
                       </Trans>
                     </FormDescription>
                     <FormMessage />

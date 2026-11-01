@@ -1,4 +1,5 @@
 import { useCopyToClipboard } from '@documenso/lib/client-only/hooks/use-copy-to-clipboard';
+import { APP_NAME } from '@documenso/lib/constants/app';
 import type { TCachedLicense } from '@documenso/lib/types/license';
 import { SUBSCRIPTION_CLAIM_FEATURE_FLAGS } from '@documenso/lib/types/subscription';
 import { trpc } from '@documenso/trpc/react';
@@ -8,7 +9,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@docum
 import { useToast } from '@documenso/ui/primitives/use-toast';
 import { Trans, useLingui } from '@lingui/react/macro';
 import {
-  ArrowRightIcon,
   CheckCircle2Icon,
   CopyIcon,
   EyeIcon,
@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { useState } from 'react';
-import { Link, useRevalidator } from 'react-router';
+import { useRevalidator } from 'react-router';
 import { match } from 'ts-pattern';
 
 import { CardMetric } from './metric-card';
@@ -63,14 +63,6 @@ export const AdminLicenseCard = ({ licenseData }: AdminLicenseCardProps) => {
                   <Trans>No License Configured</Trans>
                 </p>
               )}
-
-              <Link
-                to="https://docs.documenso.com/users/licenses/enterprise-edition"
-                target="_blank"
-                className="flex flex-row items-center text-muted-foreground text-xs hover:text-muted-foreground/80"
-              >
-                <Trans>Learn more</Trans> <ArrowRightIcon className="h-3 w-3" />
-              </Link>
             </div>
           </div>
         </CardMetric>
@@ -92,7 +84,7 @@ export const AdminLicenseCard = ({ licenseData }: AdminLicenseCardProps) => {
         </div>
 
         <h3 className="mb-2 flex items-end font-medium text-foreground text-sm leading-tight">
-          <Trans>Documenso License</Trans>
+          <Trans>{APP_NAME} License</Trans>
         </h3>
 
         {match(license.status)
