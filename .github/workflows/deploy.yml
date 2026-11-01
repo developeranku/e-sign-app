@@ -1,25 +1,58 @@
-name: Deploy to Production
+name: Build and deploy
 
 on:
   push:
-    tags:
-      - '*'
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+# A newer push waits for the running deploy instead of racing it on the VM.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/developeranku/e-sign-app
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          token: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@v4
 
-      - name: Push to release branch
+      - name: Build image
+        run: docker build -f docker/Dockerfile -t "$IMAGE:latest" -t "$IMAGE:$GITHUB_SHA" .
+
+      - name: Push image
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git checkout release || git checkout -b release
-          git merge --ff-only main
-          git push origin release
+          echo "$TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker push "$IMAGE:$GITHUB_SHA"
+          docker push "$IMAGE:latest"
+
+      - name: Deploy to VM
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          # The job token goes in on stdin so it never shows in the VM's process list or shell history.
+          echo "$TOKEN" | ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "
+            set -e
+            docker login ghcr.io -u '$GITHUB_ACTOR' --password-stdin
+            cd /opt/e-sign-app
+            trap 'docker logout ghcr.io' EXIT
+            docker compose pull app
+            docker compose up -d
+            docker image prune -f
+          "
